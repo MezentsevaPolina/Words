@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Частоты слов</title>
+</head>
+<script>
+  function lis() {
+    del();
+    let count = [];
+    let s = document.getElementById("str").value;
+    words = s.split(" ");
+
+    for (let items in words) {
+      let char = words[items];
+      if (char in count) {
+        count[char]++;
+      } else {
+        count[char] = 1;
+      }
+    }
+
+    let ul = document.getElementById("ul");
+    for (let item in count) {
+      let li = document.createElement("li");
+      li.textContent = `${item} (${count[item]})`;
+      ul.appendChild(li);
+
+    }
+    sortList(document.getElementById("ul"));
+  }
+  function sortList(ul){
+    var new_ul = ul.cloneNode(false);
+
+    var arr = [];
+    for(var i = ul.childNodes.length; i--;){
+      if(ul.childNodes[i].nodeName === 'LI')
+        arr.push(ul.childNodes[i]);
+    }
+
+    arr.sort(function(a, b){
+      return parseInt(a.childNodes[0].data , 10) - parseInt(b.childNodes[0].data , 10);
+    });
+
+    for(var i = 0; i < arr.length; i++)
+      new_ul.appendChild(arr[i]);
+    ul.parentNode.replaceChild(new_ul, ul);
+  }
+  function del(){
+    let ul = document.getElementById("ul");
+    while (ul.firstChild){
+      ul.removeChild(ul.firstChild);
+    }
+  }
+</script>
+<body>
+<input type="text" id="str" oninput="lis()">
+<ul id="ul">
+
+</ul>
+</body>
+</html>
